@@ -29,9 +29,16 @@ app.post("/generate", async (req, res) => {
 
     const data = await response.json();
 
-    res.json({
-      result: data.choices[0].message.content
-    });
+    if (data.choices && data.choices.length > 0) {
+  res.json({
+    result: data.choices[0].message.content
+  });
+} else {
+      console.log(data);
+  res.json({
+    result: "⚠️ Try again"
+  });
+}
 
   } catch (err) {
     res.status(500).json({ error: "Server error" });
