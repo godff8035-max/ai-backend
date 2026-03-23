@@ -1,5 +1,6 @@
-import express from "express";
-import cors from "cors";
+const express = require("express");
+const fetch = require("node-fetch");
+const cors = require("cors");
 
 const app = express();
 
@@ -55,3 +56,5 @@ app.post("/generate", async (req, res) => {
     res.json({ result: "❌ Error" });
   }
 });
+
+app.listen(3000, () => console.log("Server running"));
