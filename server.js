@@ -22,7 +22,7 @@ app.post("/generate", async (req, res) => {
             {
               parts: [
                 {
-                  text: `Give a short Instagram caption about ${input}`
+                  text: `Write a short Instagram caption about ${input}`
                 }
               ]
             }
@@ -32,10 +32,21 @@ app.post("/generate", async (req, res) => {
     );
 
     const data = await response.json();
-console.log(JSON.stringify(data, null, 2));
-    const text =
-      data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "⚠️ Try again";
+
+    console.log(data); // DEBUG
+
+    // 🔥 FIXED PARSING
+    let text = "⚠️ Try again";
+
+    if (
+      data.candidates &&
+      data.candidates.length > 0 &&
+      data.candidates[0].content &&
+      data.candidates[0].content.parts &&
+      data.candidates[0].content.parts.length > 0
+    ) {
+      text = data.candidates[0].content.parts[0].text;
+    }
 
     res.json({ result: text });
 
@@ -44,5 +55,3 @@ console.log(JSON.stringify(data, null, 2));
     res.json({ result: "❌ Error" });
   }
 });
-
-app.listen(3000, () => console.log("Server running"));
