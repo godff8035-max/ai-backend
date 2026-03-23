@@ -3,16 +3,16 @@ const fetch = require("node-fetch");
 const cors = require("cors");
 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 
+// ROUTE
 app.post("/generate", async (req, res) => {
   try {
     const { input } = req.body;
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
         method: "POST",
         headers: {
@@ -34,9 +34,6 @@ app.post("/generate", async (req, res) => {
 
     const data = await response.json();
 
-    console.log(data); // DEBUG
-
-    // 🔥 FIXED PARSING
     let text = "⚠️ Try again";
 
     if (
@@ -57,4 +54,9 @@ app.post("/generate", async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Server running"));
+// ✅ IMPORTANT (Render needs this)
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
+});
