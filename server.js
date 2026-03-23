@@ -33,6 +33,7 @@ app.post("/generate", async (req, res) => {
     );
 
     const data = await response.json();
+console.log("FULL RESPONSE:", JSON.stringify(data, null, 2));
 
     let text = "⚠️ Try again";
 
