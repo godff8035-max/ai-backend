@@ -32,7 +32,7 @@ app.post("/generate", async (req, res) => {
     );
 
     const data = await response.json();
-
+console.log(JSON.stringify(data, null, 2));
     const text =
       data.candidates?.[0]?.content?.parts?.[0]?.text ||
       "⚠️ Try again";
